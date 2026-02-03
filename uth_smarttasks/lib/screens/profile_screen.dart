@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../services/auth_service.dart';
-import 'login_screen.dart';
+import 'home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final User user;
   ProfileScreen({super.key, required this.user});
 
-  final AuthService _auth = AuthService();
-
-  Future<void> _back(BuildContext context) async {
-    await _auth.signOut();
-    if (context.mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
-    }
+  void _continueToHome(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => HomeScreen(user: user)),
+    );
   }
 
-  InputDecoration _fieldDec({
-    required String label,
-    Widget? suffixIcon,
-  }) {
+  InputDecoration _fieldDec({required String label, Widget? suffixIcon}) {
     return InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(fontWeight: FontWeight.w600),
@@ -56,28 +47,9 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "Profile",
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700),
         ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: InkWell(
-            onTap: () => _back(context),
-            borderRadius: BorderRadius.circular(999),
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFE8F2FF),
-              ),
-              child: const Icon(Icons.arrow_back_ios_new,
-                  size: 18, color: Colors.blue),
-            ),
-          ),
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
@@ -93,11 +65,9 @@ class ProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 52,
                     backgroundColor: Colors.grey.shade200,
-                    backgroundImage:
-                        photo != null ? NetworkImage(photo) : null,
+                    backgroundImage: photo != null ? NetworkImage(photo) : null,
                     child: photo == null
-                        ? const Icon(Icons.person,
-                            size: 46, color: Colors.grey)
+                        ? const Icon(Icons.person, size: 46, color: Colors.grey)
                         : null,
                   ),
                   Positioned(
@@ -111,8 +81,11 @@ class ProfileScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.grey.shade300),
                       ),
-                      child: const Icon(Icons.camera_alt,
-                          size: 16, color: Colors.blue),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 16,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ],
@@ -123,10 +96,13 @@ class ProfileScreen extends StatelessWidget {
               // Fields
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Name",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade800)),
+                child: Text(
+                  "Name",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
               ),
               const SizedBox(height: 6),
               TextField(
@@ -139,10 +115,13 @@ class ProfileScreen extends StatelessWidget {
 
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Email",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade800)),
+                child: Text(
+                  "Email",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
               ),
               const SizedBox(height: 6),
               TextField(
@@ -155,10 +134,13 @@ class ProfileScreen extends StatelessWidget {
 
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Date of Birth",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade800)),
+                child: Text(
+                  "Date of Birth",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
               ),
               const SizedBox(height: 6),
               TextField(
@@ -172,19 +154,19 @@ class ProfileScreen extends StatelessWidget {
 
               const Spacer(),
 
-              // Back button
+              // Continue button
               SizedBox(
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: () => _back(context),
+                  onPressed: () => _continueToHome(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: const StadiumBorder(),
                     elevation: 0,
                   ),
                   child: const Text(
-                    "Back",
+                    "Continue to SmartTasks",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
