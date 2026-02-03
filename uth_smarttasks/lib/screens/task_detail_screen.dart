@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/task.dart';
-import '../services/task_service.dart';
+import '../viewmodels/task_viewmodel.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   final int taskId;
@@ -12,7 +13,6 @@ class TaskDetailScreen extends StatefulWidget {
 }
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  final TaskService _taskService = TaskService();
   Task? _task;
   bool _isLoading = true;
   String? _error;
@@ -46,7 +46,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     });
 
     try {
-      final task = await _taskService.getTaskById(widget.taskId);
+      final viewModel = Provider.of<TaskViewModel>(context, listen: false);
+      final task = await viewModel.getTaskById(widget.taskId);
       setState(() {
         _task = task;
         _isLoading = false;

@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final User user;
   ProfileScreen({super.key, required this.user});
-
-  void _continueToHome(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => HomeScreen(user: user)),
-    );
-  }
 
   InputDecoration _fieldDec({required String label, Widget? suffixIcon}) {
     return InputDecoration(
@@ -41,16 +33,6 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Profile",
-          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700),
-        ),
-        automaticallyImplyLeading: false,
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 18),
@@ -153,28 +135,6 @@ class ProfileScreen extends StatelessWidget {
               ),
 
               const Spacer(),
-
-              // Continue button
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: () => _continueToHome(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: const StadiumBorder(),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    "Continue to SmartTasks",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

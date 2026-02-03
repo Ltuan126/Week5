@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
-import 'profile_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,9 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _loading = false;
 
   void _snack(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   Future<void> _loginGoogle() async {
@@ -31,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted || user == null) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ProfileScreen(user: user)),
+        MaterialPageRoute(builder: (_) => HomeScreen(user: user)),
       );
     } catch (e) {
       _snack("Đăng nhập thất bại: $e");
